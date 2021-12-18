@@ -3,6 +3,8 @@ package divinerpg.registries;
 
 import com.google.common.collect.*;
 import divinerpg.*;
+import divinerpg.world.arcana.*;
+import divinerpg.world.gen.piece.*;
 import divinerpg.world.gen.structure.structures.*;
 import net.minecraft.util.registry.*;
 import net.minecraft.world.gen.feature.*;
@@ -72,5 +74,14 @@ public class StructureRegistry {
                 structureMap.put(structure, structureSeparationSettings);
             }
         });
+    }
+    public interface Pieces {
+        IStructurePieceType ARCANA_PIECE = register(ArcanaPieces.Piece::new, "arcana");
+        IStructurePieceType ICEIKA_HOUSE = register(IceikaHousePiece.Piece::new, "iceika_house");
+        IStructurePieceType ICEIKA_DUNGEON = register(IceikaDungeonPiece.Piece::new, "iceika_dungeon");
+
+        static IStructurePieceType register(IStructurePieceType piece, String name) {
+            return Registry.register(Registry.STRUCTURE_PIECE, name.toLowerCase(Locale.ROOT), piece);
+        }
     }
 }

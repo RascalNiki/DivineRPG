@@ -125,6 +125,8 @@ public class FancyRenders {
         RenderTypeLookup.setRenderLayer(BlockRegistry.skythernStairs, RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(BlockRegistry.soulSludgeDoor, RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(BlockRegistry.soulStoneDoor, RenderType.cutoutMipped());
+        RenderTypeLookup.setRenderLayer(BlockRegistry.smoothGlass, RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(BlockRegistry.stainedGlass, RenderType.translucent());
         RenderTypeLookup.setRenderLayer(BlockRegistry.stainedGlass2, RenderType.translucent());
         RenderTypeLookup.setRenderLayer(BlockRegistry.stainedGlass3, RenderType.translucent());
         RenderTypeLookup.setRenderLayer(BlockRegistry.stainedGlass4, RenderType.translucent());
@@ -132,7 +134,7 @@ public class FancyRenders {
         RenderTypeLookup.setRenderLayer(BlockRegistry.stainedGlass6, RenderType.translucent());
         RenderTypeLookup.setRenderLayer(BlockRegistry.stainedGlass7, RenderType.translucent());
         RenderTypeLookup.setRenderLayer(BlockRegistry.stainedGlass8, RenderType.translucent());
-        RenderTypeLookup.setRenderLayer(BlockRegistry.steelDoor, RenderType.cutoutMipped());
+        RenderTypeLookup.setRenderLayer(BlockRegistry.steelDoor, RenderType.translucent());
         RenderTypeLookup.setRenderLayer(BlockRegistry.sunbloom, RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(BlockRegistry.sunBlossom, RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(BlockRegistry.sunstormSpawner, RenderType.translucent());
@@ -150,6 +152,7 @@ public class FancyRenders {
         RenderTypeLookup.setRenderLayer(BlockRegistry.wildwoodVine, RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(BlockRegistry.yellowChristmasLights, RenderType.cutoutMipped());
         RenderTypeLookup.setRenderLayer(BlockRegistry.yellowDulah, RenderType.cutoutMipped());
+        RenderTypeLookup.setRenderLayer(BlockRegistry.metalCaging, RenderType.cutoutMipped());
 
 
 

@@ -56,7 +56,6 @@ public class TileEntityInfusionTable extends LockableTileEntity implements ITick
         return items.get(slot);
     }
 
-    //TODO - Make stacks shrink upon taking from the slot
     @Override
     public ItemStack removeItem(int index, int count) {
         return ItemStackHelper.removeItem(this.items, index, count);
@@ -105,13 +104,17 @@ public class TileEntityInfusionTable extends LockableTileEntity implements ITick
             Item item = x.getOutput(input, template, inputCount);
             if(item != null) {
                 items.set(2, new ItemStack(item));
+                items.set(0, ItemStack.EMPTY);
             }
             else {
                 items.set(2, ItemStack.EMPTY);
             }
         }
         else {
-            items.set(2, ItemStack.EMPTY);
+//            items.set(2, ItemStack.EMPTY);
         }
     }
+
+
+
 }

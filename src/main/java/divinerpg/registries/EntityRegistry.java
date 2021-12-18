@@ -490,21 +490,6 @@ public class EntityRegistry {
     }
 
     public static void spawnStuff(BiomeLoadingEvent event) {
-        ArrayList<Biome.Category> overworldCats = new ArrayList<>();
-        overworldCats.add(Biome.Category.TAIGA);
-        overworldCats.add(Biome.Category.EXTREME_HILLS);
-        overworldCats.add(Biome.Category.JUNGLE);
-        overworldCats.add(Biome.Category.MESA);
-        overworldCats.add(Biome.Category.PLAINS);
-        overworldCats.add(Biome.Category.SAVANNA);
-        overworldCats.add(Biome.Category.ICY);
-        overworldCats.add(Biome.Category.BEACH);
-        overworldCats.add(Biome.Category.FOREST);
-        overworldCats.add(Biome.Category.OCEAN);
-        overworldCats.add(Biome.Category.DESERT);
-        overworldCats.add(Biome.Category.RIVER);
-        overworldCats.add(Biome.Category.SWAMP);
-        overworldCats.add(Biome.Category.MUSHROOM);
         Biome.Category biome = event.getCategory();
 
         if (biome == Biome.Category.THEEND) {
@@ -519,7 +504,9 @@ public class EntityRegistry {
             event.getSpawns().getSpawner(EntityClassification.MONSTER).add(new MobSpawnInfo.Spawners(SCORCHER, 7, 1, 4));
             event.getSpawns().getSpawner(EntityClassification.MONSTER).add(new MobSpawnInfo.Spawners(WILDFIRE, 50, 1, 1));
         }
-        if (overworldCats.contains(biome)) {
+        if (biome == Biome.Category.TAIGA || biome == Biome.Category.EXTREME_HILLS || biome == Biome.Category.JUNGLE || biome == Biome.Category.MESA || biome == Biome.Category.PLAINS || biome == Biome.Category.SAVANNA
+                || biome == Biome.Category.ICY || biome == Biome.Category.BEACH || biome == Biome.Category.FOREST || biome == Biome.Category.OCEAN || biome == Biome.Category.DESERT || biome == Biome.Category.RIVER
+                || biome == Biome.Category.SWAMP || biome == Biome.Category.MUSHROOM) {
             event.getSpawns().getSpawner(EntityClassification.MONSTER).add(new MobSpawnInfo.Spawners(CAVE_CRAWLER, 70, 2, 3));
             event.getSpawns().getSpawner(EntityClassification.MONSTER).add(new MobSpawnInfo.Spawners(CAVECLOPS, 70, 1, 4));
             event.getSpawns().getSpawner(EntityClassification.MONSTER).add(new MobSpawnInfo.Spawners(ENDER_SPIDER,  4, 1, 4));
@@ -541,7 +528,7 @@ public class EntityRegistry {
             event.getSpawns().getSpawner(EntityClassification.MONSTER).add(new MobSpawnInfo.Spawners(DESERT_CRAWLER, 50, 1, 4));
             event.getSpawns().getSpawner(EntityClassification.MONSTER).add(new MobSpawnInfo.Spawners(SAGUARO_WORM, 20, 1, 4));
         }
-        if (biome == Biome.Category.BEACH) {
+        if (biome == Biome.Category.BEACH || biome == Biome.Category.RIVER || biome == Biome.Category.OCEAN) {
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(CRAB, 100, 4, 4));
             event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(KING_CRAB, 40, 4, 4));
         }
@@ -550,11 +537,11 @@ public class EntityRegistry {
             event.getSpawns().getSpawner(EntityClassification.MONSTER).add(new MobSpawnInfo.Spawners(JUNGLE_DRAMCRYX, 80, 1, 4));
             event.getSpawns().getSpawner(EntityClassification.MONSTER).add(new MobSpawnInfo.Spawners(JUNGLE_SPIDER , 80, 1, 4));
         }
-        if (biome == Biome.Category.PLAINS) {
+        if (biome == Biome.Category.PLAINS || biome == Biome.Category.SAVANNA || biome == Biome.Category.SWAMP || biome == Biome.Category.MESA || biome == Biome.Category.TAIGA) {
             event.getSpawns().getSpawner(EntityClassification.MISC).add(new MobSpawnInfo.Spawners(CYCLOPS, 10, 2, 4));
             event.getSpawns().getSpawner(EntityClassification.MISC).add(new MobSpawnInfo.Spawners(KOBBLIN, 5, 1, 1));
         }
-        if (biome == Biome.Category.FOREST) {
+        if (biome == Biome.Category.FOREST || biome == Biome.Category.MUSHROOM || biome == Biome.Category.SAVANNA) {
             event.getSpawns().getSpawner(EntityClassification.MISC).add(new MobSpawnInfo.Spawners(PUMPKIN_SPIDER, 20, 1, 1));
         }
         if (biome == Biome.Category.OCEAN) {
@@ -730,7 +717,7 @@ public class EntityRegistry {
         manager.register(APALACHIA_CADILLION, new RenderDivineMob(manager, new ModelCadillionTEMP<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/apalachia_cadillion.png")));
         manager.register(APALACHIA_GOLEM, new RenderDivineMob(manager, new ModelTwilightGolem<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/apalachia_golem.png")));
         manager.register(APALACHIA_TOMO, new RenderDivineMob(manager, new ModelTomo<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/apalachia_tomo.png")));
-        manager.register(ENCHANTED_ARCHER, new RenderDivineMob(manager, new ModelEnchantedArcher<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/enchanted_archer.png"))); //TODO - bow
+        manager.register(ENCHANTED_ARCHER, new RenderEnchantedArcher(manager));
         manager.register(ENCHANTED_WARRIOR, new RenderEnchantedWarrior(manager));
         manager.register(SPELLBINDER, new RenderDivineMob(manager, new ModelMystic<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/spellbinder.png")));
 
@@ -739,7 +726,7 @@ public class EntityRegistry {
         manager.register(MEGALITH, new RenderDivineMob(manager, new ModelMegalith<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/megalith.png")));
         manager.register(MYSTIC, new RenderDivineMob(manager, new ModelMystic<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/mystic.png")));
         manager.register(SAMEK, new RenderDivineMob(manager, new ModelSamek<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/samek.png")));
-        manager.register(SKYTHERN_ARCHER, new RenderDivineMob(manager, new ModelTwilightArcher<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/skythern_archer.png"))); //TODO - bow
+        manager.register(SKYTHERN_ARCHER, new RenderSkythernArcher(manager));
         manager.register(SKYTHERN_FIEND, new RenderDivineMob(manager, new ModelSkythernFiend<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/skythern_fiend.png")));
         manager.register(SKYTHERN_GOLEM, new RenderDivineMob(manager, new ModelTwilightGolem<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/skythern_golem.png")));
 
@@ -751,7 +738,7 @@ public class EntityRegistry {
         manager.register(SORCERER, new RenderDivineMob(manager, new ModelSorcerer<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/sorcerer.png")));
         manager.register(SOUL_SPIDER, new RenderDivineMob(manager, new ModelSoulSpider<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/soul_spider.png")));
         manager.register(SOUL_STEALER, new RenderDivineMob(manager, new ModelSoulStealer<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/soul_stealer.png")));
-        manager.register(TWILIGHT_ARCHER, new RenderDivineMob(manager, new ModelTwilightArcher<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/twilight_archer.png"))); //TODO - bow
+        manager.register(TWILIGHT_ARCHER, new RenderTwilightArcher(manager));
 
         //Arcana
         manager.register(CAPTAIN_MERIK, new RenderDivineMob(manager, new ModelSamek<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/captain_merik.png")));
@@ -796,9 +783,9 @@ public class EntityRegistry {
         manager.register(LORGA, new RenderDivineMob(manager, new ModelLorga<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/lorga.png")));
         manager.register(LORGA_FLIGHT, new RenderDivineMob(manager, new ModelLorgaflight<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/lorga_flight.png")));
         manager.register(MANDRAGORA, new RenderDivineMob(manager, new ModelMandragora<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/mandragora.png")));
-        manager.register(MYSTERIOUS_MAN_LAYER1, new RenderDivineMob(manager, new ModelMysteriousMan<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/mysterious_man_layer1.png")));
-        manager.register(MYSTERIOUS_MAN_LAYER2, new RenderDivineMob(manager, new ModelMysteriousMan<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/mysterious_man_layer2.png")));
-        manager.register(MYSTERIOUS_MAN_LAYER3, new RenderDivineMob(manager, new ModelMysteriousMan<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/mysterious_man_layer3.png")));
+        manager.register(MYSTERIOUS_MAN_LAYER1, new RenderDivineMob(manager, new ModelMysteriousMan<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/mysterious_man_layer_1.png")));
+        manager.register(MYSTERIOUS_MAN_LAYER2, new RenderDivineMob(manager, new ModelMysteriousMan<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/mysterious_man_layer_2.png")));
+        manager.register(MYSTERIOUS_MAN_LAYER3, new RenderDivineMob(manager, new ModelMysteriousMan<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/mysterious_man_layer_3.png")));
         manager.register(SHADAHIER, new RenderDivineMob(manager, new ModelShadahier<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/shadahier.png")));
         manager.register(THE_HUNGER, new RenderDivineMob(manager, new ModelTheHunger<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/the_hunger.png")));
         manager.register(TOCAXIN, new RenderDivineMob(manager, new ModelTocaxin<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/tocaxin.png")));
@@ -806,7 +793,7 @@ public class EntityRegistry {
         manager.register(VERMENOUS, new RenderDivineMob(manager, new ModelVermenous<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/vermenous.png")));
         manager.register(VHRAAK, new RenderDivineMob(manager, new ModelVhraak<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/vhraak.png")));
         manager.register(ZONE, new RenderDivineMob(manager, new ModelZone<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/zone.png")));
-        manager.register(ZORAGON, new RenderDivineMob(manager, new ModelZoragon<Entity>(), new ResourceLocation(DivineRPG.MODID, "textures/entity/zoragon.png")));
+        manager.register(ZORAGON, new RenderDivineMob(manager, new ModelZoragon<Entity>(), 4, new ResourceLocation(DivineRPG.MODID, "textures/entity/zoragon.png")));
     }
 
     private static <T extends Entity> EntityType<T> registerEntity(EntityType.IFactory<T> factory, String entityName, float width, float height, SpawnEggColors colors, EntityClassification classification) {

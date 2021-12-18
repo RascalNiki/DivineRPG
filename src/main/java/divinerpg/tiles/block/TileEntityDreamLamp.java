@@ -2,7 +2,6 @@ package divinerpg.tiles.block;
 
 import divinerpg.blocks.vethea.*;
 import divinerpg.client.containers.*;
-import divinerpg.events.*;
 import divinerpg.registries.*;
 import divinerpg.util.*;
 import net.minecraft.block.*;
@@ -106,23 +105,32 @@ public class TileEntityDreamLamp extends TileEntity implements INamedContainerPr
     }
 
 
+    int ticks;
     @Override
     public void tick() {
-        if (!this.level.isClientSide) {
-            ItemStack acidStack = this.chestContents.getItem(0);
-            Block block = this.level.getBlockState(this.worldPosition).getBlock();
-            int tick = Ticker.tick;
-            if (acidStack.getItem() == ItemRegistry.acid) {
-                ((BlockDreamLamp) block).setOn(this.level, this.worldPosition);
-                if (tick > 300) {
-                    tick = 0;
-                    acidStack.shrink(1);
-                }
-            }
-            if (acidStack.getItem() != ItemRegistry.acid) {
-                ((BlockDreamLamp) block).setOff(this.level, this.worldPosition);
+        if(!this.level.isClientSide) {
+            ItemStack acidStack = chestContents.getItem(0);
+            boolean powerOn = false;
+            if (!acidStack.isEmpty() && acidStack.getItem() == ItemRegistry.acid) {
+                powerOn = true;
+            } else if (acidStack.isEmpty() || acidStack.getItem() != ItemRegistry.acid) {
+                powerOn = false;
             }
 
+            Block block = this.level.getBlockState(this.getBlockPos()).getBlock();
+            if (block instanceof BlockDreamLamp) {
+                if (powerOn) {
+                    ((BlockDreamLamp) block).setOn(this.level, this.getBlockPos());
+                    ticks++;
+                    if(ticks > 1200){
+                        ticks = 0;
+                        acidStack.shrink(1);
+                    }
+
+                } else {
+                    ((BlockDreamLamp) block).setOff(this.level, this.getBlockPos());
+                }
+            }
             this.setChanged();
         }
     }

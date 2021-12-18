@@ -3,7 +3,9 @@ package divinerpg.registries;
 import com.google.common.collect.*;
 import divinerpg.*;
 import divinerpg.config.*;
+import divinerpg.world.arcana.*;
 import divinerpg.world.gen.tree.decorator.*;
+import divinerpg.world.vethea.*;
 import net.minecraft.util.*;
 import net.minecraft.util.registry.*;
 import net.minecraft.village.*;
@@ -32,6 +34,9 @@ public class KeyRegistry {
             ARCANA_PORTAL = POI.register("arcana_portal", () -> new PointOfInterestType("arcana_portal", PointOfInterestType.getBlockStates(BlockRegistry.arcanaPortal), 0, 1)),
             ICEIKA_PORTAL = POI.register("iceika_portal", () -> new PointOfInterestType("iceika_portal", PointOfInterestType.getBlockStates(BlockRegistry.iceikaPortal), 0, 1));
     public static ConfiguredFeature<BaseTreeFeatureConfig, ?> DIVINE_TREE, EDEN_TREE, WILDWOOD_TREE, APALACHIA_TREE, SKYTHERN_TREE, MORTUM_TREE, FROZEN_TREE;
+
+
+    public static IStructureProcessorType<DivineStructureBlockProcessor> CHEST_PROCESSOR = () -> DivineStructureBlockProcessor.CODEC;
 
     public static void init() {
         DivineRPG.LOGGER.info("[DivineRPG] Registered registry keys");
@@ -72,15 +77,19 @@ public class KeyRegistry {
 
         ARCANA_BIOME = RegistryKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(DivineRPG.MODID, "arcana"));
         ARCANA_WORLD = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(DivineRPG.MODID, "arcana"));
+        Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(DivineRPG.MODID, "arcana"), ArcanaChunkGenerator.CODEC);
 
         VETHEA_BIOME = RegistryKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(DivineRPG.MODID, "vethea"));
         VETHEA_WORLD = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(DivineRPG.MODID, "vethea"));
         VETHEA_BUILDER = RegistryKey.create(Registry.SURFACE_BUILDER_REGISTRY, new ResourceLocation(DivineRPG.MODID, "vethea"));
+        Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(DivineRPG.MODID, "vethea"), VetheaChunkGenerator.CODEC);
 
         ICEIKA_PLAINS_BIOME = RegistryKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(DivineRPG.MODID, "iceika_plains"));
         ICEIKA_HILLS_BIOME = RegistryKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(DivineRPG.MODID, "iceika_hills"));
         ICEIKA_WORLD = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(DivineRPG.MODID, "iceika"));
         ICEIKA_BUILDER = RegistryKey.create(Registry.SURFACE_BUILDER_REGISTRY, new ResourceLocation(DivineRPG.MODID, "iceika"));
+
+        Registry.register(Registry.STRUCTURE_PROCESSOR, new ResourceLocation(DivineRPG.MODID, "chest_processor"), CHEST_PROCESSOR);
     }
 
 

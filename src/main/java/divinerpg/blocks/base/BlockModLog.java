@@ -1,46 +1,35 @@
 package divinerpg.blocks.base;
 
-import divinerpg.DivineRPG;
+import divinerpg.*;
+import divinerpg.entities.vethea.*;
+import divinerpg.registries.*;
 import net.minecraft.block.*;
 import net.minecraft.block.material.*;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.*;
+import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
-import net.minecraft.util.*;
+import net.minecraft.tileentity.*;
 import net.minecraft.util.math.*;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 
-import java.util.function.Supplier;
+import javax.annotation.*;
 
 public class BlockModLog extends RotatedPillarBlock {
-    Supplier<Block> strippedLog;
 
-    public BlockModLog(String name, MaterialColor color, Supplier<Block> strippedLog) {
+    public BlockModLog(String name, MaterialColor color) {
         super(AbstractBlock.Properties.of(Material.WOOD, color).strength(2.0F).sound(SoundType.WOOD));
         setRegistryName(DivineRPG.MODID, name);
-        this.strippedLog = strippedLog;
-    }
-
-    public BlockModLog(String name, MaterialColor color, Supplier<Block> strippedLog, float hardness) {
-        super(AbstractBlock.Properties.of(Material.WOOD, color).strength(2.0F).sound(SoundType.WOOD));
-        setRegistryName(DivineRPG.MODID, name);
-        this.strippedLog = strippedLog;
     }
 
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
-        if (!world.isClientSide()) {
-            ItemStack itemStack = player.getItemInHand(hand);
-            if (itemStack.getItem() instanceof AxeItem) {
-                BlockState sourceState = world.getBlockState(pos);
-                if (strippedLog == null) {
-                    strippedLog = () -> Blocks.OAK_LOG;
-                }
-                if (!state.getBlock().getRegistryName().getPath().contains("stripped_")) {
-                    world.setBlock(pos, strippedLog.get().defaultBlockState(), 3);
-                }
-                return ActionResultType.PASS;
+    public void playerDestroy(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity tileEntity, ItemStack stack) {
+        if(this == BlockRegistry.dreamwoodLog || this == BlockRegistry.hyrewoodLog || this == BlockRegistry.hyrewoodLog || this == BlockRegistry.mintwoodLog) {
+            if (world.isClientSide) {
+                LivingEntity ent = new EntityEnt(EntityRegistry.ENT, world);
+                ent.moveTo(pos, world.random.nextInt(360), 0);
+                world.addFreshEntity(ent);
             }
         }
-        return ActionResultType.FAIL;
+        super.playerDestroy(world, player, pos, state, tileEntity, stack);
     }
 }
